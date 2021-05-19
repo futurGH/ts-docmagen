@@ -5,7 +5,7 @@
   "main": "bin/docgen.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/futurGH/ts-docmagen"
+    "url": "https://github.com/futurGH/ts-docmagen.git"
   },
   "bin": {
     "ts-docmagen": "bin/docgen.js"
