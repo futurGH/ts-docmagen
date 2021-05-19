@@ -1,0 +1,25 @@
+{
+  "name": "ts-docmagen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bin/docgen.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "bin": {
+    "ts-docmagen": "bin/docgen.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "docma": "github:Prozi/docma#pull/1/head",
+    "glob": "^7.1.7",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^2.7.1",
+    "typescript": "^4.2.4",
+    "yargs": "^17.0.1"
+  }
+}
