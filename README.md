@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img width="200" height="200" src="https://raw.githubusercontent.com/futurGH/ts-docmagen/master/ts-docma.png" alt="TS Docma" />
+    <img width="256" src="https://raw.githubusercontent.com/futurGH/ts-docmagen/master/ts-docma.png" alt="TS Docma" />
 </h1>
 
 <p align="center">
@@ -27,7 +27,7 @@ Options:
     --temp        The directory in which transpiled JavaScript is temporarily stored (auto-deleted by default)
                                                 [string] [default: "docmagen"]
 -d, --docma       Path to docma.json file
-NOTE: If there's a docma.json file in the directory the command is called from, that file will be used by default
+NOTE: If there is a docma.json file in the directory the command is called from, that file will be used by default
                                               [string] [default: "docma.json"]
     --purge-temp  Whether to delete the temporarily generated JavaScript files after documentation has been generated
                                                      [boolean] [default: true]
