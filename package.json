@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "docma": "github:Prozi/docma#pull/1/head",
+    "docma": "git+https://github.com/futurGH/docma.git",
     "glob": "^7.1.7",
     "mkdirp": "^1.0.4",
     "rimraf": "^2.7.1",
