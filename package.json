@@ -1,19 +1,32 @@
 {
   "name": "ts-docmagen",
   "version": "1.0.0",
-  "description": "",
+  "description": "Generate Docma documentation from TypeScript code annotated with JSDoc.",
   "main": "bin/docgen.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "git+https://github.com/futurGH/ts-docmagen"
   },
   "bin": {
     "ts-docmagen": "bin/docgen.js"
   },
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "doc",
+    "docs",
+    "document",
+    "documentation",
+    "docma",
+    "generate",
+    "javascript",
+    "jsdoc",
+    "typescript",
+    "ts"
+  ],
+  "author": "futurGH",
+  "license": "MIT",
   "dependencies": {
     "docma": "git+https://github.com/futurGH/docma.git",
     "glob": "^7.1.7",
