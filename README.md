@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img width="256" src="https://raw.githubusercontent.com/futurGH/ts-docmagen/master/ts-docma.png" alt="TS Docma" />
+    <img width="256" src="https://i.imgur.com/MGg9hYN.png" alt="TS Docma" />
 </h1>
 
 <p align="center">
