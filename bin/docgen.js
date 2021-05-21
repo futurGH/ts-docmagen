@@ -86,7 +86,7 @@ for (const file of inputFiles) {
   const relativePath = path.normalize(path.relative(srcPath, file))
   const fileData = {
     content: fs.readFileSync(file, { encoding: "utf8" }),
-    filename: `${path.parse(file).name}.js`
+    filename: `${path.parse(file).name}.ts`
   };
   const transpiledJS = generateComments(fileData);
   const filepath = path.join(tempDir, relativePath.replace(/\.ts/g, ".js"));

@@ -1,10 +1,14 @@
-const path = require('path')
-const ts = require('typescript')
+const path = require("path")
+const { ts } = require("ts-morph")
 
-const typeConverter = require('./type-converter')
+const typeConverter = require("./type-converter")
+const insertTypes = require("./insert-types")
 
 // Source: filename and content
 module.exports = function generateComments(source) {
+  
+  // Insert method & function types
+  source.content = insertTypes(source.content, source.filename);
   // adding const a = 1 ensures that the comments always will be copied,
   // even when there is no javascript inside (just interfaces)
   let result = ts.transpileModule('const _____a = 1; \n' + source.content, {
@@ -14,7 +18,7 @@ module.exports = function generateComments(source) {
       jsx: path.extname(source.filename) === '.tsx' ? 'react' : null,
     }
   })
-
+  
   const types = typeConverter(source.content, source.filename)
   let src = result.outputText
   source.content = src + '\n' + types

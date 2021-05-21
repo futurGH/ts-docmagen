@@ -1,5 +1,5 @@
-const path = require('path')
-const ts = require('typescript')
+const path = require("path")
+const { ts } = require("ts-morph")
 
 const appendComment = (commentBlock, toAppend) => {
   return commentBlock.replace(/[\n,\s]*\*\//, toAppend.split('\n').map(line => `\n * ${line}`) + '\n */')
@@ -42,7 +42,7 @@ const getTypeName = (type, src) => {
  */
 const getName = (node, src) => {
   let name = node.name && node.name.escapedText
-  || node.parameters && src.substring(node.parameters.pos, node.parameters.end)
+    || node.parameters && src.substring(node.parameters.pos, node.parameters.end)
   
   // changing type [key: string] to {...} - otherwise it wont be parsed by @jsdoc
   if (name === 'key: string') { return '{...}' }
@@ -92,12 +92,12 @@ let convertMembers = (jsDoc = '', type, src, parentName = null) => {
     if(ts.isArrayTypeNode(type) && type.elementType) {
       jsDoc = convertMembers(jsDoc, type.elementType, src, parentName ? parentName + '[]' : '[]')
     }
-
+    
     // Handling Array<{element1: 'somethin'}>
     if (type.typeName && type.typeName.escapedText === 'Array') {
       if(type.typeArguments && type.typeArguments.length) {
         type.typeArguments.forEach(subType => {
-
+          
           jsDoc = convertMembers(jsDoc, subType, src, parentName
             ? parentName + '[]'
             : '' // when there is no parent - jsdoc cannot parse [].name
@@ -147,7 +147,7 @@ module.exports = function typeConverter(src, filename = 'test.ts') {
     if (jsDocNode) {
       let comment = src.substring(jsDocNode.pos, jsDocNode.end)
       const name = getName(statement, src)
-
+      
       if (ts.isTypeAliasDeclaration(statement)) {
         if (ts.isFunctionTypeNode(statement.type)) {
           comment = appendComment(comment, `@typedef {function} ${name}`)
@@ -164,7 +164,7 @@ module.exports = function typeConverter(src, filename = 'test.ts') {
       }
       if (ts.isInterfaceDeclaration(statement)) {
         comment = appendComment(comment, `@interface ${name}`)
-
+        
         statement.members.forEach(member => {
           if (!member.jsDoc) { return }
           let memberComment = src.substring(member.jsDoc[0].pos, member.jsDoc[0].end)
