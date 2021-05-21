@@ -29,8 +29,10 @@ Options:
 -d, --docma       Path to docma.json file
 NOTE: If there is a docma.json file in the directory the command is called from, that file will be used by default
                                               [string] [default: "docma.json"]
-    --purge-temp  Whether to delete the temporarily generated JavaScript files after documentation has been generated
-                                                     [boolean] [default: true]
+    --no-purge-temp  Don't delete the temporarily generated JavaScript files after documentation has been generated
+                                                    [boolean] [default: false]
+    --no-docma       Don't generate Docma documentation (really only useful with --no-purge-temp)
+                                                    [boolean] [default: false]
     --debug       Enable Docma debug output         [boolean] [default: false]
 -a, --assets      List of globs to copy over as static assets
                                                          [array] [default: []]

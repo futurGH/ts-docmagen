@@ -27,10 +27,15 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "string",
     default: "docma.json"
   })
-  .option("purge-temp", {
-    describe: "Whether to delete the temporarily generated JavaScript files after documentation has been generated",
+  .option("no-purge-temp", {
+    describe: "Don't delete the temporarily generated JavaScript files after documentation has been generated",
     type: "boolean",
-    default: true
+    default: false
+  })
+  .option("no-docma", {
+    describe: "Don't generate Docma documentation (really only useful with --no-purge-temp)",
+    type: "boolean",
+    default: false
   })
   .option("debug", {
     describe: "Enable Docma debug output",
@@ -94,28 +99,30 @@ for (const file of inputFiles) {
   fs.writeFileSync(filepath, transpiledJS);
 };
 
-mkdirp(outPath);
-(async () => {
-  docmaConfig = docmaConfig ?? {};
-  docmaConfig.clean = docmaConfig?.clean ?? argv.clean ?? true;
-  docmaConfig.debug = docmaConfig?.debug ?? argv.debug ?? false;
-  const sourceFiles = getFiles(tempDir ?? docmaConfig?.src, ".js")
-  docmaConfig = {
-    ...docmaConfig,
-    "src": sourceFiles
-  };
-  docmaConfig.dest = outPath ?? docmaConfig?.dest;
-  const assetPaths = argv.assets.map(a => path.join(path.relative(process.cwd(), tempDir), argv.assets));
-  docmaConfig.assets = { "/assets": assetPaths } ?? docmaConfig?.assets ?? undefined;
-  
-  const rimraf = require("rimraf").sync;
-  try {
-    await require("docma").create()
-      .build(docmaConfig);
-  } catch(e) {
-    throw new Error(`Something went wrong while creating the Docma documentation!\n\n${e}`)
-  } finally {
-    argv.purgeTemp && rimraf(tempDir);
-  }
-})()
+if (!args.noDocma) {
+  mkdirp(outPath);
+  (async () => {
+    docmaConfig = docmaConfig ?? {};
+    docmaConfig.clean = docmaConfig?.clean ?? argv.clean ?? true;
+    docmaConfig.debug = docmaConfig?.debug ?? argv.debug ?? false;
+    const sourceFiles = getFiles(tempDir ?? docmaConfig?.src, ".js")
+    docmaConfig = {
+      ...docmaConfig,
+      "src": sourceFiles
+    };
+    docmaConfig.dest = outPath ?? docmaConfig?.dest;
+    const assetPaths = argv.assets.map(a => path.join(path.relative(process.cwd(), tempDir), argv.assets));
+    docmaConfig.assets = {"/assets": assetPaths} ?? docmaConfig?.assets ?? undefined;
+    
+    const rimraf = require("rimraf").sync;
+    try {
+      await require("docma").create()
+        .build(docmaConfig);
+    } catch (e) {
+      throw new Error(`Something went wrong while creating the Docma documentation!\n\n${e}`)
+    } finally {
+      !argv.noPurgeTemp && rimraf(tempDir);
+    }
+  })()
+}
 
