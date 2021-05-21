@@ -13,7 +13,7 @@ $ npm install -g ts-docmagen
 
 ## Usage
 
-```shell
+```
 $ ts-docmagen
 
 Generate Docma (​https://github.com/onury/docma​) documentation from TypeScript
