@@ -27,13 +27,13 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "string",
     default: "docma.json"
   })
-  .option("no-purge-temp", {
+  .option("keep-js", {
     describe: "Don't delete the temporarily generated JavaScript files after documentation has been generated",
     type: "boolean",
     default: false
   })
   .option("no-docma", {
-    describe: "Don't generate Docma documentation (really only useful with --no-purge-temp)",
+    describe: "Don't generate Docma documentation (really only useful with --keep-js)",
     type: "boolean",
     default: false
   })
@@ -42,6 +42,7 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "boolean",
     default: false
   })
+  .conflicts("debug", "no-docma")
   .option("assets", {
     alias: "a",
     describe: "List of globs to copy over as static assets",
@@ -53,6 +54,7 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "array",
     default: []
   })
+  
   .argv;
 
 const path = require("path");
@@ -99,17 +101,13 @@ for (const file of inputFiles) {
   fs.writeFileSync(filepath, transpiledJS);
 };
 
-if (!args.noDocma) {
+if (!argv.noDocma) {
   mkdirp(outPath);
   (async () => {
     docmaConfig = docmaConfig ?? {};
     docmaConfig.clean = docmaConfig?.clean ?? argv.clean ?? true;
     docmaConfig.debug = docmaConfig?.debug ?? argv.debug ?? false;
-    const sourceFiles = getFiles(tempDir ?? docmaConfig?.src, ".js")
-    docmaConfig = {
-      ...docmaConfig,
-      "src": sourceFiles
-    };
+    docmaConfig.src = getFiles(tempDir ?? docmaConfig?.src, ".js");
     docmaConfig.dest = outPath ?? docmaConfig?.dest;
     const assetPaths = argv.assets.map(a => path.join(path.relative(process.cwd(), tempDir), argv.assets));
     docmaConfig.assets = {"/assets": assetPaths} ?? docmaConfig?.assets ?? undefined;
@@ -121,7 +119,7 @@ if (!args.noDocma) {
     } catch (e) {
       throw new Error(`Something went wrong while creating the Docma documentation!\n\n${e}`)
     } finally {
-      !argv.noPurgeTemp && rimraf(tempDir);
+      !argv.keepJs && rimraf(tempDir);
     }
   })()
 }
