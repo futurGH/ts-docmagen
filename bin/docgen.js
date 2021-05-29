@@ -32,7 +32,7 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "boolean",
     default: false
   })
-  .option("no-docma", {
+  .option("no-docs", {
     describe: "Don't generate Docma documentation (really only useful with --keep-js)",
     type: "boolean",
     default: false
@@ -42,7 +42,7 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "boolean",
     default: false
   })
-  .conflicts("debug", "no-docma")
+  .conflicts("debug", "no-docs")
   .option("assets", {
     alias: "a",
     describe: "List of globs to copy over as static assets",
@@ -101,7 +101,7 @@ for (const file of inputFiles) {
   fs.writeFileSync(filepath, transpiledJS);
 };
 
-if (!argv.noDocma) {
+if (!argv.noDocs) {
   mkdirp(outPath);
   (async () => {
     docmaConfig = docmaConfig ?? {};
