@@ -42,7 +42,6 @@ const argv = require("yargs/yargs")(require("yargs/helpers").hideBin(process.arg
     type: "boolean",
     default: false
   })
-  .conflicts("debug", "no-docs")
   .option("assets", {
     alias: "a",
     describe: "List of globs to copy over as static assets",
