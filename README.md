@@ -53,10 +53,5 @@ $ ts-docmagen --src ./src --out ./documentation --assets ./assets/**/* --ignore 
 # assets directory, and ignoring 'node_modules' when transpiling
 ```
 
-## Credit
-**The [Docma](https://github.com/onury/docma) project** for making this possible!
-
-**[SoftwareBrothers/better-docs](https://github.com/SoftwareBrothers/better-docs)** for the code in [generate-comments.js](generate-comments.js) and [type-converter.js](type-converter.js) to transpile TypeScript typings to JSDoc type annotations & typedefs 
-
 ## License
 [MIT](LICENSE) © [futurGH](https://github.com/futurGH).
